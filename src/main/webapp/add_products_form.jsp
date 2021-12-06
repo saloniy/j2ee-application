@@ -23,7 +23,6 @@
 			<div class="row">
 				<div class="row my-3">
 			        <div class="col-12 d-flex justify-content-end">
-			            <!-- only visible to customer -->
 			            <a href="dashboard" class="btn btn-success">Back to Dashboard</a>
 			        </div>
 			    </div>

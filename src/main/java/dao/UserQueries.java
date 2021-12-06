@@ -13,6 +13,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+import model.Users;
 
 public class UserQueries {
 	private Connection conn;
@@ -53,6 +57,45 @@ public class UserQueries {
 			return "failure";
 			//e.printStackTrace();
 			
+		}
+	}
+	
+	public ArrayList<Users> getAllCustomers() {
+		String sql = "Select * from users where isAdmin = 0";
+		try {
+			Statement st = conn.createStatement();
+			ResultSet result = st.executeQuery(sql);
+			ArrayList<Users> users = new ArrayList<Users>();
+			while(result.next()) {
+				Users user = new Users();
+				user.setName(result.getString("name"));
+				user.setContact(result.getString("contact"));
+				user.setUsername(result.getString("username"));
+				users.add(user);
+			}
+			return users;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public String getCustomerNameByUsername(String username) {
+		String sql = "Select name from users where username = ?";
+		try {
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setString(1, username);
+			ResultSet result = st.executeQuery();
+			if(result.next()) {
+				return result.getString("name");
+			} else {
+				return null;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
 		}
 	}
 }

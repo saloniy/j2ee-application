@@ -16,13 +16,7 @@ public class Users {
 	private String password;
 	private Boolean isAdmin;
  
-	public Users(String name, String contact, String username, String password, Boolean isAdmin){
-		this.name = name;
-		this.contact = contact;
-		this.username = username;
-		this.password = password;
-		this.isAdmin = isAdmin;
-	}
+	public Users(){}
 
 	public String getName() {
 		return name;

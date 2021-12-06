@@ -66,21 +66,23 @@
 		        <table class="table table-light">
 		            <thead>
 		            <tr>
-		                <th scope="col">#</th>
 		                <th scope="col">Name</th>
+		                <th scope="col">Contact</th>
 		                <th scope="col">Email ID</th>
 		                <th scope="col"></th>
 		            </tr>
 		            </thead>
 		            <tbody id="allUsersData">
-		                <tr>
-		                    <th scope="row">1</th>
-		                    <td></td>
-		                    <td></td>
-		                    <td>
-	                           <a class="btn btn-primary">View Registered Products</a>
-		                    </td>
-		                </tr>
+		            	<c:forEach var="user" items="${requestScope['allUsers']}">
+			                <tr>
+			                    <td>${user.getName()}</td>
+			                    <td>${user.getContact()}</td>
+			                    <td>${user.getUsername()}</td>
+			                    <td>
+		                           <a class="btn btn-primary" href="view-registered-device?username=${user.getUsername()}">View Registered Products</a>
+			                    </td>
+			                </tr>
+			            </c:forEach>
 		            </tbody>
 		        </table>
 		    </div>

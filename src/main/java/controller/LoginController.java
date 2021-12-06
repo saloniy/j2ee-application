@@ -68,7 +68,12 @@ public class LoginController extends HttpServlet {
 		ResultSet result = validator.validateLogin(username, password);
 		if (result != null) {
 			try {
-				Users user = new Users(result.getString("name"), result.getString("contact"), username, password, result.getBoolean("isAdmin"));
+				Users user = new Users();
+				user.setName(result.getString("name"));
+				user.setContact(result.getString("contact"));
+				user.setUsername(username);
+				user.setPassword(password);
+				user.setIsAdmin(result.getBoolean("isAdmin"));
 				HttpSession session = request.getSession(false);
 				session.setAttribute("username", user.getUsername());
 				session.setAttribute("isAdmin", user.getIsAdmin());

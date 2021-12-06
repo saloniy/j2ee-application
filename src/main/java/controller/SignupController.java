@@ -81,7 +81,12 @@ public class SignupController extends HttpServlet {
 		String result = createUser.createUser(name, contact, username, password, isAdmin);
 		if (result == "success") {
 			try {
-				Users user = new Users(name, contact, username, password, isAdmin);
+				Users user = new Users();
+				user.setName(name);
+				user.setContact(contact);
+				user.setUsername(username);
+				user.setPassword(password);
+				user.setIsAdmin(isAdmin);
 				HttpSession session = request.getSession(false);
 				session.setAttribute("username", user.getUsername());
 				session.setAttribute("isAdmin", user.getIsAdmin());

@@ -10,6 +10,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,6 +18,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import dao.DBConn;
+import dao.UserQueries;
+import model.Users;
 
 /**
  * Servlet implementation class DashboardController
@@ -37,9 +43,22 @@ public class DashboardController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
 		String url = "/dashboard.jsp";
-		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-		dispatcher.forward(request, response);
+		RequestDispatcher rd = request.getRequestDispatcher(url);
+		if(session.getAttribute("isAdmin") != null && (Boolean)session.getAttribute("isAdmin") == true) {
+			try {
+				UserQueries userQuery = new UserQueries(DBConn.getConnection());
+				ArrayList<Users> users = userQuery.getAllCustomers();
+				request.setAttribute("allUsers", users);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			rd.forward(request, response);
+		} else {
+			response.sendRedirect(request.getContextPath() + "/login");
+		}
 		
 	}
 

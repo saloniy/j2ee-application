@@ -47,7 +47,6 @@ public class DashboardController extends HttpServlet {
 		String url = "/dashboard.jsp";
 		RequestDispatcher rd = request.getRequestDispatcher(url);
 		if(session.getAttribute("isAdmin") != null && (Boolean)session.getAttribute("isAdmin") == true) {
-			System.out.println("in");
 			try {
 				UserQueries userQuery = new UserQueries(DBConn.getConnection());
 				ArrayList<Users> users = userQuery.getAllCustomers();

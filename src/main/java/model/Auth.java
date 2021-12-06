@@ -21,14 +21,14 @@ public class Auth {
 	}
 	
 	public String createUser(String name, String contact, String username, String password, Boolean isAdmin) {
-			UserQueries user = null;
-			try {
-				user = new UserQueries(DBConn.getConnection());
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			String result = user.createUser(name, contact, username, password, isAdmin);
-			return result;
+		UserQueries user = null;
+		try {
+			user = new UserQueries(DBConn.getConnection());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String result = user.createUser(name, contact, username, password, isAdmin);
+		return result;
 	}
 }

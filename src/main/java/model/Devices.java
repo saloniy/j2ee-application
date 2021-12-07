@@ -18,6 +18,7 @@ public class Devices {
 		private String serial_number;
 		private Date date;
 		private String username;
+		private Integer claim_count;
 		
 		public Devices(){}
 
@@ -63,5 +64,12 @@ public class Devices {
 			this.username = username;
 		}
 		
+		public Integer getClaimCount() {
+			return claim_count;
+		}
+	 
+		public void setClaimCount(Integer claimCount) {
+			this.claim_count = claimCount;
+		}
 
 }

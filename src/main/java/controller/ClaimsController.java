@@ -10,16 +10,26 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.ClaimQueries;
+import dao.DBConn;
+import dao.DeviceQueries;
+import dao.UserQueries;
+import model.Claims;
+import model.Devices;
+
 /**
  * Servlet implementation class ClaimsController
  */
-@WebServlet("/ClaimsController")
+@WebServlet("/view-claims")
 public class ClaimsController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -35,8 +45,22 @@ public class ClaimsController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String url = "/view_claims.jsp";
+		String user = request.getParameter("username");
+		Integer deviceId = Integer.parseInt(request.getParameter("deviceId"));
+		String productName = request.getParameter("product");
+		RequestDispatcher rd = request.getRequestDispatcher(url);
+		try {
+			ClaimQueries claimQuery = new ClaimQueries(DBConn.getConnection());
+			ArrayList<Claims> claims = claimQuery.getAllClaimsForDeviceAndUser(user, deviceId);
+			request.setAttribute("claims", claims);
+			request.setAttribute("username", user);
+			request.setAttribute("productName", productName);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		rd.forward(request, response);
 	}
 
 	/**

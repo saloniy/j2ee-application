@@ -25,15 +25,15 @@ DROP TABLE IF EXISTS `regd_devices`;
 CREATE TABLE `regd_devices` (
   `id` int NOT NULL AUTO_INCREMENT,
   `product_id` int DEFAULT NULL,
-  `serial_number` varchar(25) DEFAULT NULL,
+  `serial_number` varchar(25) NOT NULL,
   `date` datetime DEFAULT NULL,
   `username` varchar(25) DEFAULT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`,`serial_number`),
   KEY `username_idx` (`username`),
   KEY `product_id_idx` (`product_id`),
   CONSTRAINT `device_user` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,6 +42,7 @@ CREATE TABLE `regd_devices` (
 
 LOCK TABLES `regd_devices` WRITE;
 /*!40000 ALTER TABLE `regd_devices` DISABLE KEYS */;
+INSERT INTO `regd_devices` VALUES (1,1,'888267TWR','2021-12-06 16:53:14','saloni@gmail.com'),(2,2,'TRTR7363','2021-12-06 16:53:40','saloni@gmail.com'),(3,2,'GH62538222','2021-12-06 20:05:34','preeti@humber.ca');
 /*!40000 ALTER TABLE `regd_devices` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-05 20:38:31
+-- Dump completed on 2021-12-07 17:00:57

@@ -33,14 +33,22 @@ public class DeviceQueries {
 			ArrayList<Devices> devices = new ArrayList<Devices>();
 			while(result.next()) {
 				String sql_product = "Select * from products where product_id = ?";
+				String sql_claims = "Select count(*) as claim_count from claims where device_id = ? and username= ?";
 				PreparedStatement ps_product = conn.prepareStatement(sql_product);
 				ps_product.setInt(1, result.getInt("product_id"));
+				PreparedStatement ps_claims = conn.prepareStatement(sql_claims);
+				ps_claims.setInt(1, result.getInt("id"));
+				ps_claims.setString(2, username);
 				ResultSet result_product = ps_product.executeQuery();
+				ResultSet result_claims = ps_claims.executeQuery();
 				Devices device = new Devices();
 				if(result_product.next()) {
 					device.setProductName(result_product.getString("product_name"));
 				} else {
 					device.setProductName("Not Found");
+				}
+				if(result_claims.next()) {
+					device.setClaimCount(result_claims.getInt("claim_count"));
 				}
 				device.setId(result.getString("id"));
 				device.setSerialNumber(result.getString("serial_number"));

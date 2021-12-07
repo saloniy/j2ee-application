@@ -69,7 +69,7 @@
 		                <th scope="col">Name</th>
 		                <th scope="col">Contact</th>
 		                <th scope="col">Email ID</th>
-		                <th scope="col"></th>
+		                <th scope="col">Registered Devices</th>
 		            </tr>
 		            </thead>
 		            <tbody id="allUsersData">

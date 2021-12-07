@@ -38,7 +38,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('Saloni','7382773827','admin@abc.com','Admin@123',1),('Saloni Yadav','2183091289','saloni@gmail.com','Saloni@97',NULL),('Saloni Yadav','2347324907','saloni7@gmail.com','Saloni@97',NULL),('Saloni Yadav','2347324907','saloni9@gmail.com','Saloni@97',NULL),('Saloni Yadav','9023809127','saloniy@gmail.com','Saloni@97',NULL),('Saloni Yadav','0987654321','saloniy7@gmail.com','Saloni@97',NULL),('Saloni Yadav','0987654321','saloniy97@gmail.com','Saloni@97',NULL);
+INSERT INTO `users` VALUES ('Admin','0987654321','admin@abc.com','Admin@123',1),('Preeti','6876428736','preeti@humber.ca','Preeti@123',0),('Saloni Yadav','1234567890','saloni@gmail.com','Saloni@97',0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-05 20:38:32
+-- Dump completed on 2021-12-07 17:00:56

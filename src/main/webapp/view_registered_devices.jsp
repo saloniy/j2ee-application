@@ -34,7 +34,7 @@
 	                <th scope="col">Product Name</th>
 	                <th scope="col">Serial Number</th>
 	                <th scope="col">Purchase Date</th>
-	                <th scope="col"></th>
+	                <th scope="col">Claims</th>
 	            </tr>
 	            </thead>
 	            <tbody id="allUsersData">
@@ -44,7 +44,12 @@
 		                    <td>${device.getSerialNumber()}</td>
 		                    <td>${device.getPurchaseDate()}</td>
 		                    <td>
-	                           <a class="btn btn-primary" href="view-caims?username=${user.getUsername()}&deviceId=${device.getId()}">View Claims</a>
+		               			<c:if test="${device.getClaimCount() > 0}">
+	                           		<a class="btn btn-primary" href="view-claims?username=${requestScope['username']}&deviceId=${device.getId()}&product=${device.getProductName()}">View Claims</a>
+		                    	</c:if>
+		                    	<c:if test="${device.getClaimCount() == 0}">
+		                    		<p>No claims submitted</p>
+		                    	</c:if>
 		                    </td>
 		                </tr>
 		            </c:forEach>

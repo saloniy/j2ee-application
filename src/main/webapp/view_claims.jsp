@@ -16,4 +16,70 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
    	<jsp:include page="header.jsp"></jsp:include>
+   	<div class="container-fluid app-container min-vh-100">
+	    <div class="container">
+	        <div class="row mt-4">
+	            <div class="col-12 text-center">
+	                <h1>All Claims for Device: ${requestScope['productName']}</h1>
+	            </div>
+	        </div>
+	        <div class="row my-3">
+	            <div class="col-12 d-flex justify-content-end">
+			    	<a href="view-registered-device?username=${requestScope['username']}" class="btn btn-success">Back to Registered Devices</a>
+	            </div>
+	        </div>
+	        <table class="table table-light">
+	            <thead>
+	            <tr>
+	                <th scope="col">Claim Date</th>
+	                <th scope="col">Description</th>
+	                <th scope="col">Claim Status</th>
+	            </tr>
+	            </thead>
+	            <tbody id="allUsersData">
+	            	<c:forEach var="claim" items="${requestScope['claims']}">
+		                <tr>
+		                    <td>${claim.getClaimDate()}</td>
+		                    <td>${claim.getDescription()}</td>
+		                    <td>
+			                    <select class="form-select" id="claimStatus${claim.getId()}" 
+			                    name="claimStatus" ${claim.getStatus() == "Approved" ? 'disabled': ''} 
+			                    onChange="claimStatusChanged(${claim.getId()})">
+			                    	<option value="Pending" ${claim.getStatus() == "Pending" ? 'selected' : ''}>Pending</option>
+			                    	<option value="Approved" ${claim.getStatus() == "Approved" ? 'selected' : ''}>Approved</option>
+			                    	<option value="Rejected" ${claim.getStatus() == "Rejected" ? 'selected' : ''}>Rejected</option>
+			                    </select>
+			                    <span id="updatedMsg${claim.getId()}" class="success-msg hide">Claim status updated</span>
+			                    <span id="errorMsg${claim.getId()}" class="error-msg hide">Some error occurred</span>
+		                  	</td>  
+		                    
+		                </tr>
+		            </c:forEach>
+	            </tbody>
+	        </table>
+	    </div>
+	</div>
    	<jsp:include page="footer.jsp"></jsp:include>
+   	<script>
+   	function claimStatusChanged(id) {
+   	    var statusSelectBoxValue = $('#claimStatus' + id).val();
+   	    var updatedMsg = $('#updatedMsg' + id);
+   	    var errorMsg = $('#errorMsg' + id);
+   	    $.post('update-claim-status', {claimId: id, status: statusSelectBoxValue}).done(function(data) {
+   	        if(data == "Done") {
+   	        	if(statusSelectBoxValue == "Approved"){
+   	        		$('#claimStatus' + id).attr("disabled", true);
+   	        	}
+   	            updatedMsg.addClass('show').removeClass('hide');
+   	            setTimeout(function(){
+   	                updatedMsg.addClass('hide').removeClass('show');
+   	            }, 5000);
+   	        } else {
+   	        	errorMsg.addClass('show').removeClass('hide');
+ 	   	        setTimeout(function(){
+ 	   	        	errorMsg.addClass('hide').removeClass('show');
+ 	   	        }, 5000);
+   	        }
+   	    })
+   	}
+   	</script>

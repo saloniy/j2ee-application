@@ -28,12 +28,13 @@ CREATE TABLE `claims` (
   `device_id` int DEFAULT NULL,
   `date` datetime DEFAULT NULL,
   `description` varchar(45) DEFAULT NULL,
+  `status` varchar(25) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `username_idx` (`username`),
   KEY `device_id_idx` (`device_id`),
   CONSTRAINT `claim_user` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `device_id` FOREIGN KEY (`device_id`) REFERENCES `regd_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,6 +43,7 @@ CREATE TABLE `claims` (
 
 LOCK TABLES `claims` WRITE;
 /*!40000 ALTER TABLE `claims` DISABLE KEYS */;
+INSERT INTO `claims` VALUES (1,'saloni@gmail.com',1,'2021-12-06 20:01:39','description','Rejected'),(2,'saloni@gmail.com',2,'2021-12-06 20:01:39','desc','Pending'),(3,'saloni@gmail.com',1,'2021-12-06 20:01:39','desc','Approved');
 /*!40000 ALTER TABLE `claims` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-05 20:38:31
+-- Dump completed on 2021-12-07 17:00:57

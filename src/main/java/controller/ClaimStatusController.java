@@ -33,7 +33,7 @@ public class ClaimStatusController extends HttpServlet {
 		String status = request.getParameter("status");
 		Integer claimId = Integer.parseInt(request.getParameter("claimId"));
 		response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
-	    response.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
 	    try {
 			ClaimQueries claimQuery = new ClaimQueries(DBConn.getConnection());
 			int count = claimQuery.updateClaimStatusById(status, claimId);

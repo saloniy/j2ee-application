@@ -47,28 +47,29 @@ public class DashboardController extends HttpServlet {
 		String url = "/dashboard.jsp";
 		RequestDispatcher rd = request.getRequestDispatcher(url);
 		// admin dashboard code
-		if(session.getAttribute("isAdmin") != null && (Boolean)session.getAttribute("isAdmin") == true) {
-			try {
-				UserQueries userQuery = new UserQueries(DBConn.getConnection());
-				ArrayList<Users> users = userQuery.getAllCustomers();
-				request.setAttribute("allUsers", users);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		if(session.getAttribute("isAdmin") != null) {
+			if ((Boolean)session.getAttribute("isAdmin") == true) {
+				try {
+					UserQueries userQuery = new UserQueries(DBConn.getConnection());
+					ArrayList<Users> users = userQuery.getAllCustomers();
+					request.setAttribute("allUsers", users);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				rd.forward(request, response);
+				return;
+			} else if((Boolean)session.getAttribute("isAdmin") == false) {
+				//user dashboard code
+				try {
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				rd.forward(request, response);
+				return;
 			}
-			rd.forward(request, response);
-		} else {
-			response.sendRedirect(request.getContextPath() + "/login");
-		}
-		// user dashboard code
-		if(session.getAttribute("isAdmin") != null && (Boolean)session.getAttribute("isAdmin") == false) {
-			try {
-				
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			rd.forward(request, response);
 		} else {
 			response.sendRedirect(request.getContextPath() + "/login");
 		}

@@ -98,4 +98,26 @@ public class UserQueries {
 			return null;
 		}
 	}
+	
+	public ArrayList<Users> getUserBySearchTerm(String searchTerm) {
+		String sql = "Select * from users where name like ? or username like ?";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, searchTerm);
+			ps.setString(2, searchTerm);
+			ResultSet result = ps.executeQuery();
+			ArrayList<Users> users = new ArrayList<Users>();
+			while(result.next()) {
+				Users user = new Users();
+				user.setName(result.getString("name"));
+				user.setContact(result.getString("contact"));
+				user.setUsername(result.getString("username"));
+				users.add(user);
+			}
+			return users;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

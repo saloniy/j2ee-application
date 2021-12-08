@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:target/dependency/* com.example.J2EE_Final_WebApp
+web: java $JAVA_OPTS -cp target/classes:target/dependency/* controller.LoginController

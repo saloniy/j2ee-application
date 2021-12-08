@@ -58,9 +58,16 @@
 		            </div>
 		        </div>
 		        <div class="row my-3">
-		            <div class="col-12 d-flex justify-content-end">
-		                <a href="addProduct" class="btn btn-success me-3">Add New Product</a>
-		                <a href="" class="btn btn-primary">Search User</a>
+		        	<div class="col-6">
+		        		<div class="input-group mb-3 p-20 white-text">
+						  	<input type="text" name="searchUser" class="form-control" placeholder="Search User" aria-label="Search User" aria-describedby="search">
+						  	<div onClick="searchUser()" class="input-group-append bg-primary p-20">
+						    	<span class="fas fa-search" id="search"></span>
+						  	</div>
+						</div>
+		        	</div>
+		            <div class="col-6 d-flex justify-content-end my-3">
+			        	<a href="addProduct" class="btn btn-success me-3 height-fit">Add New Product</a>
 		            </div>
 		        </div>
 		        <table class="table table-light">

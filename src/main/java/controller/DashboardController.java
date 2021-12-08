@@ -47,7 +47,7 @@ public class DashboardController extends HttpServlet {
 		String url = "/dashboard.jsp";
 		RequestDispatcher rd = request.getRequestDispatcher(url);
 		// admin dashboard code
-		if(session.getAttribute("isAdmin") != null) {
+		if(session != null && session.getAttribute("isAdmin") != null) {
 			if ((Boolean)session.getAttribute("isAdmin") == true) {
 				try {
 					UserQueries userQuery = new UserQueries(DBConn.getConnection());

@@ -7,6 +7,9 @@ body {
     padding-left: 0px;
     padding-right: 0px;
 }
+.p-20 {
+	padding: 20px;
+}
 .login-card {
     width: 24rem;
 }
@@ -50,6 +53,14 @@ footer {
 
 .text-fb-icon {
     color: #1337C7
+}
+
+.white-text {
+	color: white;
+}
+
+.height-fit {
+	height: fit-content;
 }
 
 @media screen and (max-width:767px) {

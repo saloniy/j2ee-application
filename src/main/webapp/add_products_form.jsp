@@ -52,7 +52,7 @@
 				    <table class="table table-light" >
 				        <thead>
 				        <tr>
-				            <th scope="col">#</th>
+				            <th scope="col">Product ID</th>
 				            <th scope="col">Product Name</th>
 				        </tr>
 				        </thead>

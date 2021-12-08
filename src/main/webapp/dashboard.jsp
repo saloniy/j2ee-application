@@ -27,7 +27,7 @@
 			    <div class="row my-3">
 			        <div class="col-12 d-flex justify-content-end">
 			            <!-- only visible to customer -->
-			            <a href="" class="btn btn-success">Register New Device</a>
+			            <a href="register-device" class="btn btn-success">Register New Device</a>
 			        </div>
 			    </div>
 			    <table class="table table-light">
@@ -35,16 +35,19 @@
 			        <tr>
 			            <th scope="col">#</th>
 			            <th scope="col">Device Name</th>
-			            <th scope="col">Status</th>
-			            <th scope="col">Claim Submitted</th>
+			            <th scope="col">Claim Submitted: Status</th>
+			            <th scope="col"></th>
 			        </tr>
 			        </thead>
 			        <tbody>
 			            <tr>
 			                <th scope="row">1</th>
 			                <td></td>
-			                <td></td>
-			                <td></td>
+			                <td>Dates of claims submitted: Status</td>
+			                <td>
+			                	<!--  button shown only if claim count < 3 for the device -->
+			                	<a href="add-claim" class="btn btn-success">Add Claim</a>
+			                </td>
 			            </tr>
 			        </tbody>
 			    </table>

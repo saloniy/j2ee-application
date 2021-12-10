@@ -3,14 +3,19 @@
 xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
 	<error-page>  
 	  	<!-- Missing resource -->
-	  	<error-code>404</error-code>  
-	  	<location>/error.jsp</location>  
-	</error-page>  
-	<error-page>  
+	  	<error-code>404</error-code>
+	  	<location>/error.jsp</location>
+	</error-page>
+	<error-page>
 	    <!-- Uncaught exception -->
-		<error-code>500</error-code>  
-		<location>/error.jsp</location>  
-	</error-page>  
+		<error-code>500</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+	    <!-- Invalid method -->
+		<error-code>405</error-code>
+		<location>/error.jsp</location>
+	</error-page>
 	<welcome-file-list>
 	  	<!-- Entry point for application -->
 		<welcome-file>/login_registration.jsp</welcome-file>

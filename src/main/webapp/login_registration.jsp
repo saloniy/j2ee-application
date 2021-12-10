@@ -30,7 +30,7 @@
                          </c:if>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email address</label>
-                                <input type="email" class="form-control" name="email" id="email" placeholder="Email Address">
+                                <input type="email" class="form-control" name="email" id="email" placeholder="Email Address" value="${ requestScope['email'] != null ? requestScope['email'] : ''}">
                                 <c:if test="${requestScope['emptyEmail'] != null}">
 		                    	<div class="error-msg">${requestScope['emptyEmail']}</div>
 		                    	</c:if>
@@ -59,21 +59,21 @@
 		                    </c:if>
 		                    <div class="mb-3">
 		                        <label for="name" class="form-label">Name</label>
-		                        <input type="text" name="name" class="form-control" id="name" placeholder="Full Name">
+		                        <input type="text" name="name" class="form-control" id="name" placeholder="Full Name" value="${ requestScope['name'] != null ? requestScope['name'] : ''}">
 		                        <c:if test="${requestScope['invalidName'] != null}">
 		                    	<div class="error-msg">${requestScope['invalidName']}</div>
 		                    	</c:if>
 		                    </div>
 		                    <div class="mb-3">
 		                        <label for="email" class="form-label">Email address</label>
-		                        <input type="email" name="email" class="form-control" id="email" placeholder="Email Address">
+		                        <input type="email" name="email" class="form-control" id="email" placeholder="Email Address" value="${ requestScope['signupEmail'] != null ? requestScope['signupEmail'] : ''}">
 		                       	<c:if test="${requestScope['invalidEmail'] != null}">
 		                    	<div class="error-msg">${requestScope['invalidEmail']}</div>
 		                    	</c:if>
 		                    </div>
 		                    <div class="mb-3">
 		                        <label for="contact" class="form-label">Contact</label>
-		                        <input type="tel" maxlength="10" name="contact" class="form-control" id="contact" placeholder="Contact Number">
+		                        <input type="tel" maxlength="10" name="contact" class="form-control" id="contact" placeholder="Contact Number" value="${ requestScope['contact'] != null ? requestScope['contact'] : ''}">
 		                        <c:if test="${requestScope['invalidContact'] != null}">
 		                    	<div class="error-msg">${requestScope['invalidContact']}</div>
 		                    	</c:if>

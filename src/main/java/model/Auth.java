@@ -9,16 +9,26 @@
 ********************************************************************************/
 package model;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.sql.ResultSet;
 
 import dao.DBConn;
 import dao.UserQueries;
 
 public class Auth {
+	
+	public static String MD5(String s) throws Exception {
+		MessageDigest m = MessageDigest.getInstance("MD5");
+	    m.update(s.getBytes(),0,s.length());
+	    return new BigInteger(1,m.digest()).toString(16);
+	}
+
 	public ResultSet validateLogin(String username, String password) {
 		try {
 			UserQueries user = new UserQueries(DBConn.getConnection());
-			ResultSet result = user.validateUser(username, password);
+			String encPassword = MD5(password);
+			ResultSet result = user.validateUser(username, encPassword);
 			if (result != null) {
 				return result;
 			}
@@ -31,13 +41,16 @@ public class Auth {
 	
 	public String createUser(String name, String contact, String username, String password, Boolean isAdmin) {
 		UserQueries user = null;
+		String encPassword = "";
 		try {
+			encPassword = MD5(password);
 			user = new UserQueries(DBConn.getConnection());
+			String result = user.createUser(name, contact, username, encPassword, isAdmin);
+			return result;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		}
-		String result = user.createUser(name, contact, username, password, isAdmin);
-		return result;
 	}
 }

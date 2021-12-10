@@ -54,8 +54,8 @@ public class UserQueries {
 				return "failure";
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
 			return "failure";
-			//e.printStackTrace();
 			
 		}
 	}

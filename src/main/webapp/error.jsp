@@ -15,7 +15,7 @@
    	<div class="container-fluid app-container min-vh-100">
 	    <div class="container text-center">
 	    	<h1>Oops! Some Error Occurred</h1> 
-	    	<a class="btn btn-primary" href="dashboard">Go back to the dashboard</a>
+	    	<a class="btn btn-primary" href="dashboard">Go Back</a>
 	    </div>
 	</div>
    	<jsp:include page="footer.jsp"></jsp:include>

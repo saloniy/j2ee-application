@@ -68,6 +68,15 @@ public class SignupController extends HttpServlet {
 			request.setAttribute("invalidContact", invalidContact);
 			request.setAttribute("invalidPassword", invalidPassword);
 			request.setAttribute("passwordMismatch", passwordMismatch);
+			if(request.getParameter("name").trim() != "") {
+				request.setAttribute("name", request.getParameter("name"));
+			}
+			if(request.getParameter("email").trim() != "") {
+				request.setAttribute("signupEmail", request.getParameter("email"));
+			}
+			if(request.getParameter("contact").trim() != "") {
+				request.setAttribute("contact", request.getParameter("contact"));
+			}
 			rd.forward(request, response);
 			return;
 		}

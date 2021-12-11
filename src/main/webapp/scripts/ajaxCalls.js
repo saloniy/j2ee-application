@@ -2,7 +2,7 @@
  * call to update the status of a claim when changed by the admin
  */
 function claimStatusChanged(id) {
-   	    var statusSelectBoxValue = $('#claimStatus' + id).val() + "%";
+   	    var statusSelectBoxValue = $('#claimStatus' + id).val();
    	    var updatedMsg = $('#updatedMsg' + id);
    	    var errorMsg = $('#errorMsg' + id);
    	    $.post('update-claim-status', {claimId: id, status: statusSelectBoxValue}).done(function(data) {

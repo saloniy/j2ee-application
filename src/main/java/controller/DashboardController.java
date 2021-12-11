@@ -85,7 +85,6 @@ public class DashboardController extends HttpServlet {
 								)
 							);
 							request.setAttribute("claims" + devices.get(i).getId(), claims);
-							System.out.print("diff " + diff);
 							if(diff < 5) {
 								devices.get(i).setCanClaim(true);
 							} else {

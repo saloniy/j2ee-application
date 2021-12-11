@@ -53,13 +53,18 @@
 				                	</c:forEach>
 				                </td>
 				                <td>
-				                	<c:if test="${device.getClaimCount() < 3}">
-				                	<!--  button shown only if claim count < 3 for the device -->
-				                	<a href="add-claim" class="btn btn-success">Add Claim</a>
+				                	<c:if test="${device.getCanClaim() == false}">
+				                		<p>The warranty period of 5 years is up. No more claims can be filed.</p>
 				                	</c:if>
-				                	<c:if test="${device.getClaimCount() >= 3}">
-				                		<p>You have already submitted 3 claims for this device</p>
-				                	</c:if>
+				                	<c:if test="${device.getCanClaim() == true}">
+					                	<c:if test="${device.getClaimCount() < 3}">
+					                	<!--  button shown only if claim count < 3 for the device -->
+					                	<a href="add-claim" class="btn btn-success">Add Claim</a>
+					                	</c:if>
+					                	<c:if test="${device.getClaimCount() >= 3}">
+					                		<p>You have already submitted 3 claims for this device</p>
+					                	</c:if>
+					                </c:if>
 				                </td>
 				            </tr>
 			            </c:forEach>

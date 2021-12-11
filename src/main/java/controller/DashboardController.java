@@ -10,6 +10,10 @@
 package controller;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -70,6 +74,10 @@ public class DashboardController extends HttpServlet {
 					ArrayList<Devices> devices = deviceQuery.getAllRegisteredDevicesForUser(session.getAttribute("username").toString());
 					if(devices.size() > 0 && devices.get(0).getClaimCount() > 0) {
 						for(int i=0; i< devices.size(); i++) {
+							Date purchaseDate = new SimpleDateFormat("yyyy-MM-dd").parse(devices.get(i).getPurchaseDate());
+							Date today = new Date();
+							long diffInMillis = Math.abs(today.getTime() - purchaseDate.getTime());
+							long diff = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS)/365;
 							ClaimQueries claimQuery = new ClaimQueries(DBConn.getConnection());
 							ArrayList<Claims> claims = claimQuery.getAllClaimsForDeviceAndUser(
 									session.getAttribute("username").toString(),
@@ -77,8 +85,12 @@ public class DashboardController extends HttpServlet {
 								)
 							);
 							request.setAttribute("claims" + devices.get(i).getId(), claims);
+							if(diff < 5) {
+								devices.get(i).setCanClaim(true);
+							} else {
+								devices.get(i).setCanClaim(false);
+							}
 						}
-						
 					}
 					request.setAttribute("devices", devices);
 				} catch (Exception e) {

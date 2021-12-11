@@ -19,6 +19,7 @@ public class Devices {
 		private Date date;
 		private String username;
 		private Integer claim_count;
+		private boolean can_claim;
 		
 		public Devices(){}
 
@@ -70,6 +71,14 @@ public class Devices {
 	 
 		public void setClaimCount(Integer claimCount) {
 			this.claim_count = claimCount;
+		}
+		
+		public boolean getCanClaim() {
+			return can_claim;
+		}
+		
+		public void setCanClaim(boolean canClaim) {
+			this.can_claim = canClaim;
 		}
 
 }

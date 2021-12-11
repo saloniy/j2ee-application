@@ -35,20 +35,34 @@
 			        <tr>
 			            <th scope="col">#</th>
 			            <th scope="col">Device Name</th>
+			            <th scope="col">Registered On</th>
 			            <th scope="col">Claim Submitted: Status</th>
-			            <th scope="col"></th>
+			            <th scope="col">Submit New Claim</th>
 			        </tr>
 			        </thead>
 			        <tbody>
-			            <tr>
-			                <th scope="row">1</th>
-			                <td></td>
-			                <td>Dates of claims submitted: Status</td>
-			                <td>
-			                	<!--  button shown only if claim count < 3 for the device -->
-			                	<a href="add-claim" class="btn btn-success">Add Claim</a>
-			                </td>
-			            </tr>
+			        	<c:forEach var="device" items="${requestScope['devices']}">
+				            <tr>
+				                <th scope="row">${device.getId()}</th>
+				                <td>${device.getProductName()}</td>
+				                <td>${device.getPurchaseDate()}</td>
+				                <td>
+				                	<c:set var="claimForDevice" value="claims${device.getId()}"/>
+				                	<c:forEach var="claim" items="${requestScope[claimForDevice]}">
+				                		${claim.getClaimDate()}: ${claim.getStatus()}<br/>
+				                	</c:forEach>
+				                </td>
+				                <td>
+				                	<c:if test="${device.getClaimCount() < 3}">
+				                	<!--  button shown only if claim count < 3 for the device -->
+				                	<a href="add-claim" class="btn btn-success">Add Claim</a>
+				                	</c:if>
+				                	<c:if test="${device.getClaimCount() >= 3}">
+				                		<p>You have already submitted 3 claims for this device</p>
+				                	</c:if>
+				                </td>
+				            </tr>
+			            </c:forEach>
 			        </tbody>
 			    </table>
 			</div>

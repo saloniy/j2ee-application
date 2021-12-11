@@ -20,8 +20,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.ClaimQueries;
 import dao.DBConn;
+import dao.DeviceQueries;
 import dao.UserQueries;
+import model.Claims;
+import model.Devices;
 import model.Users;
 
 /**
@@ -46,8 +50,8 @@ public class DashboardController extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		String url = "/dashboard.jsp";
 		RequestDispatcher rd = request.getRequestDispatcher(url);
-		// admin dashboard code
 		if(session != null && session.getAttribute("isAdmin") != null) {
+			// admin dashboard code
 			if ((Boolean)session.getAttribute("isAdmin") == true) {
 				try {
 					UserQueries userQuery = new UserQueries(DBConn.getConnection());
@@ -62,7 +66,21 @@ public class DashboardController extends HttpServlet {
 			} else if((Boolean)session.getAttribute("isAdmin") == false) {
 				//user dashboard code
 				try {
-					
+					DeviceQueries deviceQuery = new DeviceQueries(DBConn.getConnection());
+					ArrayList<Devices> devices = deviceQuery.getAllRegisteredDevicesForUser(session.getAttribute("username").toString());
+					if(devices.size() > 0 && devices.get(0).getClaimCount() > 0) {
+						for(int i=0; i< devices.size(); i++) {
+							ClaimQueries claimQuery = new ClaimQueries(DBConn.getConnection());
+							ArrayList<Claims> claims = claimQuery.getAllClaimsForDeviceAndUser(
+									session.getAttribute("username").toString(),
+									Integer.parseInt(devices.get(i).getId()
+								)
+							);
+							request.setAttribute("claims" + devices.get(i).getId(), claims);
+						}
+						
+					}
+					request.setAttribute("devices", devices);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

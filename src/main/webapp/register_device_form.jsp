@@ -35,7 +35,7 @@
 	                         </c:if>-->
 	                            <div class="mb-3">
 	                                <label for="username" class="form-label">Email ID:</label>
-	                                <input type="text" class="form-control" name="username" id="username" value="" readonly>
+	                                <input type="text" class="form-control" name="username" id="username" value="${sessionScope['username']}" readonly>
 	                            </div>
 	                            <div class="mb-3">
 	                                <label for="productName" class="form-label">Product Name: </label>

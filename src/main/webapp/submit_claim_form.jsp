@@ -15,6 +15,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<jsp:useBean id="now" class="java.util.Date" />
    	<jsp:include page="header.jsp"></jsp:include>
    	<div class="container-fluid app-container min-vh-100">
         <div class="container">
@@ -35,7 +37,8 @@
 	                         </c:if>-->
 	                            <div class="mb-3">
 	                                <label for="claimDate" class="form-label">Claim Date: </label>
-	                                <input type="date" class="form-control" name="claimDate" id="claimDate" readonly value="{add today's date}">
+	                                <fmt:formatDate var="today" value="${now}" pattern="yyyy-MM-dd" />
+	                                <input type="date" class="form-control" name="claimDate" id="claimDate" readonly value="${today}">
 	                            </div>
 	                            <div class="mb-3">
 	                                <label for="description" class="form-label">Description: </label>

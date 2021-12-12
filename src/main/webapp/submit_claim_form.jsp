@@ -4,7 +4,7 @@
 * No part of this assignment has been copied manually or electronically from any other source
 * (including web sites) or distributed to other students.
 *
-* Name: Saloni Yadav, Preeti Kshirsagar; Student ID: N01414159, N01494576; Date: ____________________
+* Name: Saloni Yadav, Preeti Kshirsagar; Student ID: N01414159, N01494576; Date: 12 Dec, 2021
 *
 ********************************************************************************/-->
 <%
@@ -31,23 +31,22 @@
 			        <div class="card login-card mt-3">
 			            <div class="card-body">
 			                <h5 class="card-title">Add a claim</h5>
-	                        <form method="post" action="add-claim" novalidate>
-	                        <!--<c:if test="${requestScope['error'] != null}">
-	                            <div class="alert alert-danger">${requestScope['error']}</div>
-	                         </c:if>-->
-	                            <div class="mb-3">
-	                                <label for="claimDate" class="form-label">Claim Date: </label>
-	                                <fmt:formatDate var="today" value="${now}" pattern="yyyy-MM-dd" />
-	                                <input type="date" class="form-control" name="claimDate" id="claimDate" readonly value="${today}">
-	                            </div>
-	                            <div class="mb-3">
-	                                <label for="description" class="form-label">Description: </label>
-	                                <textarea name="description" maxlength="45" class="form-control"></textarea>
-	                            </div>
-	                            <div class="mb-3">
-	                                <button type="submit" class="btn btn-primary">Register Device</button>
-	                            </div>
-	                        </form>
+                        	<div class="alert alert-success hide" id="successMsg">Claim Added Successfully</div>
+                           	<div class="alert alert-danger hide" id="errorMsg">Some Error Occurred. Please try again.</div>
+                            <div class="mb-3">
+                                <label for="claimDate" class="form-label">Claim Date: </label>
+                                <fmt:formatDate var="today" value="${now}" pattern="yyyy-MM-dd" />
+                                <input type="hidden" name="deviceId" id="deviceId" value="${requestScope['deviceId']}"/>
+                                <input type="date" class="form-control" name="claimDate" id="claimDate" readonly value="${today}"/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description: </label>
+                                <textarea name="description" id="description" maxlength="45" class="form-control"></textarea>
+                            	<div class="error-msg hide" id="claimError">Please enter a description</div>
+                            </div>
+                            <div class="mb-3">
+                                <button type="button" onClick="addClaim()" class="btn btn-primary">Add Claim</button>
+                            </div>
 			            </div>
 			        </div>
 			    </div>

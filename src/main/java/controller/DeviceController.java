@@ -4,7 +4,7 @@
 * No part of this assignment has been copied manually or electronically from any other source
 * (including web sites) or distributed to other students.
 *
-* Name: Saloni Yadav, Preeti Kshirsagar; Student ID: N01414159, N01494576; Date: ____________________
+* Name: Saloni Yadav, Preeti Kshirsagar; Student ID: N01414159, N01494576; Date: 8 Dec, 2021
 *
 ********************************************************************************/
 package controller;
@@ -18,10 +18,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.DBConn;
 import dao.DeviceQueries;
 import dao.UserQueries;
+import model.Auth;
 import model.Devices;
 
 /**
@@ -30,6 +32,7 @@ import model.Devices;
 @WebServlet("/view-registered-device")
 public class DeviceController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	Boolean forCustomer = false;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -43,6 +46,12 @@ public class DeviceController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+    	Auth auth = new Auth();
+    	if(!auth.validateUrlAccessibility(session, forCustomer)) {
+    		response.sendRedirect(request.getContextPath() + "/logout");
+    		return;
+    	}  
 		String url = "/view_registered_devices.jsp";
 		String user = request.getParameter("username").toString();
 		RequestDispatcher rd = request.getRequestDispatcher(url);

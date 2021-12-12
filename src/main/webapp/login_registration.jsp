@@ -30,14 +30,14 @@
                          </c:if>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email address</label>
-                                <input type="email" class="form-control" name="email" id="email" placeholder="Email Address" value="${ requestScope['email'] != null ? requestScope['email'] : ''}">
+                                <input type="email" class="form-control" name="email" placeholder="Email Address" value="${ requestScope['email'] != null ? requestScope['email'] : ''}">
                                 <c:if test="${requestScope['emptyEmail'] != null}">
 		                    	<div class="error-msg">${requestScope['emptyEmail']}</div>
 		                    	</c:if>
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                                <input type="password" class="form-control" name="password" placeholder="Password" autocomplete="new-password">
                                 <c:if test="${requestScope['emptyPassword'] != null}">
 		                    	<div class="error-msg">${requestScope['emptyPassword']}</div>
 		                    	</c:if>
@@ -53,41 +53,41 @@
 		        <div class="card login-card mt-3">
 		            <div class="card-body">
 		                <h5 class="card-title">Sign Up</h5>
-		                <form method="post" action="signup" novalidate>
+		                <form method="post" action="signup" novalidate autocomplete="false">
 		                	<c:if test="${requestScope['userExists'] != null}">
 		                    	<div class="alert alert-danger">${requestScope['userExists']}</div>
 		                    </c:if>
 		                    <div class="mb-3">
 		                        <label for="name" class="form-label">Name</label>
-		                        <input type="text" name="name" class="form-control" id="name" placeholder="Full Name" value="${ requestScope['name'] != null ? requestScope['name'] : ''}">
+		                        <input type="text" name="name" class="form-control" placeholder="Full Name" value="${ requestScope['name'] != null ? requestScope['name'] : ''}">
 		                        <c:if test="${requestScope['invalidName'] != null}">
 		                    	<div class="error-msg">${requestScope['invalidName']}</div>
 		                    	</c:if>
 		                    </div>
 		                    <div class="mb-3">
 		                        <label for="email" class="form-label">Email address</label>
-		                        <input type="email" name="email" class="form-control" id="email" placeholder="Email Address" value="${ requestScope['signupEmail'] != null ? requestScope['signupEmail'] : ''}">
+		                        <input type="email" name="email" class="form-control" placeholder="Email Address" value="${ requestScope['signupEmail'] != null ? requestScope['signupEmail'] : ''}">
 		                       	<c:if test="${requestScope['invalidEmail'] != null}">
 		                    	<div class="error-msg">${requestScope['invalidEmail']}</div>
 		                    	</c:if>
 		                    </div>
 		                    <div class="mb-3">
 		                        <label for="contact" class="form-label">Contact</label>
-		                        <input type="tel" maxlength="10" name="contact" class="form-control" id="contact" placeholder="Contact Number" value="${ requestScope['contact'] != null ? requestScope['contact'] : ''}">
+		                        <input type="tel" maxlength="10" name="contact" class="form-control" placeholder="Contact Number" value="${ requestScope['contact'] != null ? requestScope['contact'] : ''}">
 		                        <c:if test="${requestScope['invalidContact'] != null}">
 		                    	<div class="error-msg">${requestScope['invalidContact']}</div>
 		                    	</c:if>
 		                    </div>
 		                    <div class="mb-3">
 		                        <label for="password" class="form-label">Password</label>
-		                        <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+		                        <input type="password" name="password" class="form-control" placeholder="Password" autocomplete="new-password">
 		                        <c:if test="${requestScope['invalidPassword'] != null}">
 		                    	<div class="error-msg">${requestScope['invalidPassword']}</div>
 		                    	</c:if>
 		                    </div>
 		                    <div class="mb-3">
 		                        <label for="cpassword" class="form-label">Confirm Password</label>
-		                        <input type="password" name="cpassword" class="form-control" id="cpassword" placeholder="Re-type Password">
+		                        <input type="password" name="cpassword" class="form-control" placeholder="Re-type Password">
 		                        <c:if test="${requestScope['passwordMismatch'] != null}">
 		                    	<div class="error-msg">${requestScope['passwordMismatch']}</div>
 		                    	</c:if>

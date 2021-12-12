@@ -29,32 +29,35 @@
 			        <div class="card login-card mt-3">
 			            <div class="card-body">
 			                <h5 class="card-title">Register Device</h5>
-	                        <form method="post" action="register-device" novalidate>
-	                        <!--<c:if test="${requestScope['error'] != null}">
-	                            <div class="alert alert-danger">${requestScope['error']}</div>
-	                         </c:if>-->
-	                            <div class="mb-3">
-	                                <label for="username" class="form-label">Email ID:</label>
-	                                <input type="text" class="form-control" name="username" id="username" value="${sessionScope['username']}" readonly>
-	                            </div>
-	                            <div class="mb-3">
-	                                <label for="productName" class="form-label">Product Name: </label>
-	                                <select name="productName" class="form-select">
-	                                	<option value="{productid}">{productname}</option>
-	                                </select>
-	                            </div>
-	                            <div class="mb-3">
-	                                <label for="serialNum" class="form-label">Serial Number: </label>
-	                                <input type="text" class="form-control" name="serialNum" id="serialNum" placeholder="Enter Serial Number">
-	                            </div>
-	                            <div class="mb-3">
-	                                <label for="purchaseDate" class="form-label">Purchase Date: </label>
-	                                <input type="date" class="form-control" name="purchaseDate" id="purchaseDate" placeholder="yyyy/MM/dd">
-	                            </div>
-	                            <div class="mb-3">
-	                                <button type="submit" class="btn btn-primary">Register Device</button>
-	                            </div>
-	                        </form>
+                            <div class="alert alert-success hide" id="successMsg">Device Registered Successfully</div>
+                            <div class="alert alert-danger hide" id="errorMsg">Some Error Occurred. Please try again or check the serial number.</div>
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Email ID:</label>
+                                <input type="text" class="form-control" name="username" id="username" value="${sessionScope['username']}" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="productName" class="form-label">Product Name: </label>
+                                <select name="productName" id="product" class="form-select">
+                                	<option value="">Select Product</option>
+                                <c:forEach var="product" items="${requestScope['products']}">
+                                	<option value="${product.getId()}">${product.getName()}</option>
+                                </c:forEach>
+                                </select>
+                                <div class="error-msg hide" id="productError">Please select a product</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="serialNum" class="form-label">Serial Number: </label>
+                                <input type="text" class="form-control" name="serialNum" id="serialNum" placeholder="Enter Serial Number">
+                                <div class="error-msg hide" id="serialNumError">Please enter a valid serial number</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="purchaseDate" class="form-label">Purchase Date: </label>
+                                <input type="date" class="form-control" name="purchaseDate" id="purchaseDate" max="" placeholder="yyyy/MM/dd">
+                                <div class="error-msg hide" id="purchaseError">Please select a purchase date</div>
+                            </div>
+                            <div class="mb-3">
+                                <button type="button" class="btn btn-primary" onClick="registerDevice()">Register Device</button>
+                            </div>
 			            </div>
 			        </div>
 			    </div>

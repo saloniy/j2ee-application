@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.sql.Date;
 
 import model.Devices;
 
@@ -61,6 +62,23 @@ public class DeviceQueries {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	public int registerDevice(String username, int productId, String serialNumber, Date date) {
+		int count = 0;
+		String sql = "Insert into regd_devices(product_id, serial_number, date, username) values (?,?,?,?)";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, productId);
+			ps.setString(2, serialNumber);
+			ps.setDate(3, date);
+			ps.setString(4, username);
+			count = ps.executeUpdate();
+			return count;
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return 0;
 		}
 	}
 

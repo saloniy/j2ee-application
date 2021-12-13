@@ -16,6 +16,8 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="model.Devices" %>
+
 <jsp:useBean id="now" class="java.util.Date" />
    	<jsp:include page="header.jsp"></jsp:include>
    	<div class="container-fluid app-container min-vh-100">
@@ -35,6 +37,18 @@
 	                        <!--<c:if test="${requestScope['error'] != null}">
 	                            <div class="alert alert-danger">${requestScope['error']}</div>
 	                         </c:if>-->
+	                         <div class="mb-3">
+	                                <label for="claimProductId" class="form-label">Claim Product Id : </label>
+	                                <input type="text" class="form-control" name="claimProductId" id="claimProductId" readonly value="${requestScope['claimDevice'].getId()}">
+	                            </div>
+	                            <div class="mb-3">
+	                                <label for="claimProductSerial" class="form-label">Claim Product Serial No : </label>
+	                                <input type="text" class="form-control" name="claimProductSerial" id="claimProductSerial" readonly value="${requestScope['claimDevice'].getSerialNumber()}">
+	                            </div>
+	                         <div class="mb-3">
+	                                <label for="claimProduct" class="form-label">Claim Product Name : </label>
+	                                <input type="text" class="form-control" name="claimProduct" id="claimProduct" readonly value="${requestScope['claimDevice'].getProductName()}">
+	                            </div>	                            
 	                            <div class="mb-3">
 	                                <label for="claimDate" class="form-label">Claim Date: </label>
 	                                <fmt:formatDate var="today" value="${now}" pattern="yyyy-MM-dd" />
@@ -42,10 +56,13 @@
 	                            </div>
 	                            <div class="mb-3">
 	                                <label for="description" class="form-label">Description: </label>
-	                                <textarea name="description" maxlength="45" class="form-control"></textarea>
+	                                <textarea name="description" maxlength="45" class="form-control" ></textarea>
+	                                <c:if test="${requestScope['emptyDesc'] != null}">
+		                    	<div class="error-msg">${requestScope['emptyDesc']}</div>
+		                    	</c:if>
 	                            </div>
 	                            <div class="mb-3">
-	                                <button type="submit" class="btn btn-primary">Register Device</button>
+	                                <button type="submit" class="btn btn-primary">Submit Claim</button>
 	                            </div>
 	                        </form>
 			            </div>

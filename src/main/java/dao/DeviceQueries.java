@@ -19,11 +19,11 @@ import model.Devices;
 
 public class DeviceQueries {
 	private Connection conn;
-	
-	public DeviceQueries(Connection conn){
+
+	public DeviceQueries(Connection conn) {
 		this.conn = conn;
 	}
-	
+
 	public ArrayList<Devices> getAllRegisteredDevicesForUser(String username) {
 		String sql = "Select * from regd_devices where username = ?";
 		try {
@@ -31,7 +31,7 @@ public class DeviceQueries {
 			ps.setString(1, username);
 			ResultSet result = ps.executeQuery();
 			ArrayList<Devices> devices = new ArrayList<Devices>();
-			while(result.next()) {
+			while (result.next()) {
 				String sql_product = "Select * from products where product_id = ?";
 				String sql_claims = "Select count(*) as claim_count from claims where device_id = ? and username= ?";
 				PreparedStatement ps_product = conn.prepareStatement(sql_product);
@@ -42,12 +42,12 @@ public class DeviceQueries {
 				ResultSet result_product = ps_product.executeQuery();
 				ResultSet result_claims = ps_claims.executeQuery();
 				Devices device = new Devices();
-				if(result_product.next()) {
+				if (result_product.next()) {
 					device.setProductName(result_product.getString("product_name"));
 				} else {
 					device.setProductName("Not Found");
 				}
-				if(result_claims.next()) {
+				if (result_claims.next()) {
 					device.setClaimCount(result_claims.getInt("claim_count"));
 				}
 				device.setId(result.getString("id"));
@@ -62,6 +62,30 @@ public class DeviceQueries {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public Devices getDeviceFromId(String id) {
+		int device_id = Integer.parseInt(id);
+		String sql_product = "Select * from devices where id = ?";
+		Devices device = new Devices();
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql_product);
+			ps.setInt(1, device_id);
+			ResultSet result_product = ps.executeQuery();
+			if (result_product.next()) {
+				device.setProductName(result_product.getString("product_name"));
+				device.setId(result_product.getString("id"));
+				device.setSerialNumber(result_product.getString("serial_number"));
+				device.setUsername(result_product.getString("username"));
+			} else {
+				device.setProductName("Not Found");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return device;
+
 	}
 
 }

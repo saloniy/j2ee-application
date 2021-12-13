@@ -40,16 +40,27 @@
 	                            <div class="mb-3">
 	                                <label for="productName" class="form-label">Product Name: </label>
 	                                <select name="productName" class="form-select">
-	                                	<option value="{productid}">{productname}</option>
+		                                <c:forEach var="product" items="${requestScope['products']}">
+		                               		<option value="${product.getId()}">${product.getName()}</option>
+						       			</c:forEach>
 	                                </select>
+	                                <c:if test="${requestScope['invalidProduct'] != null}">
+		                    	<div class="error-msg">${requestScope['invalidProduct']}</div>
+		                    	</c:if>
 	                            </div>
 	                            <div class="mb-3">
 	                                <label for="serialNum" class="form-label">Serial Number: </label>
-	                                <input type="text" class="form-control" name="serialNum" id="serialNum" placeholder="Enter Serial Number">
+	                                <input type="text" class="form-control" name="serialNum" id="serialNum" placeholder="Enter Serial Number" value="${ requestScope['serialNum'] != null ? requestScope['serialNum'] : ''}">
+	                                <c:if test="${requestScope['invalidSerial'] != null}">
+		                    	<div class="error-msg">${requestScope['invalidSerial']}</div>
+		                    	</c:if>
 	                            </div>
 	                            <div class="mb-3">
 	                                <label for="purchaseDate" class="form-label">Purchase Date: </label>
-	                                <input type="date" class="form-control" name="purchaseDate" id="purchaseDate" placeholder="yyyy/MM/dd">
+	                                <input type="date" class="form-control" name="purchaseDate" id="purchaseDate" placeholder="yyyy/MM/dd" value="${ requestScope['purchaseDate'] != null ? requestScope['purchaseDate'] : ''}">
+	                                <c:if test="${requestScope['invalidDate'] != null}">
+		                    	<div class="error-msg">${requestScope['invalidDate']}</div>
+		                    	</c:if>
 	                            </div>
 	                            <div class="mb-3">
 	                                <button type="submit" class="btn btn-primary">Register Device</button>

@@ -20,18 +20,18 @@ import model.Products;
 
 public class ProductQueries {
 	private Connection conn;
-	
+
 	public ProductQueries(Connection conn) {
 		this.conn = conn;
 	}
-	
+
 	public ArrayList<Products> getAllProducts() {
 		String sql = "Select * from products";
 		try {
 			Statement st = conn.createStatement();
 			ResultSet result = st.executeQuery(sql);
 			ArrayList<Products> products = new ArrayList<Products>();
-			while(result.next()) {
+			while (result.next()) {
 				Products product = new Products();
 				product.setId(result.getString("product_id"));
 				product.setName(result.getString("product_name"));
@@ -44,7 +44,27 @@ public class ProductQueries {
 			return null;
 		}
 	}
-	
+
+	public Products getProductFromName(String name) {
+		String sql = "Select * from products where product_name=?";
+		Products product = new Products();
+		try {
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setString(1, name);
+			ResultSet result = st.executeQuery();
+
+			while (result.next()) {
+				product.setId(result.getString("product_id"));
+				product.setName(result.getString("product_name"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		return product;
+	}
+
 	public ArrayList<Products> addNewProduct(String name) {
 		String sql = "Insert into products(product_name) values (?)";
 		ArrayList<Products> products = new ArrayList<Products>();
@@ -52,7 +72,7 @@ public class ProductQueries {
 			PreparedStatement st = conn.prepareStatement(sql);
 			st.setString(1, name);
 			int count = st.executeUpdate();
-			if(count > 0) {
+			if (count > 0) {
 				products = getAllProducts();
 				return products;
 			} else {

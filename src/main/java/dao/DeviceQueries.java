@@ -88,4 +88,24 @@ public class DeviceQueries {
 
 	}
 
+	public String addDevice(Devices device) {
+		int rows = 0;
+		String sql = "Insert into regd_devices (product_id, serial_number, date, username) values (?,?,?,?)";
+		try {
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setInt(1, device.getProductId());
+			st.setString(2, device.getSerialNumber());
+			st.setDate(3, device.getPurchaseDate_dt());
+			st.setString(4, device.getUsername());
+			rows = st.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (rows > 0)
+			return "success";
+		else
+			return "failure";
+	}
+
 }

@@ -13,6 +13,8 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.sql.ResultSet;
 
+import javax.servlet.http.HttpSession;
+
 import dao.DBConn;
 import dao.UserQueries;
 
@@ -52,5 +54,16 @@ public class Auth {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	public Boolean validateUrlAccessibility(HttpSession session, boolean forCustomer) {
+		if(session != null && session.getAttribute("isAdmin") != null) {
+    		if ((forCustomer && (Boolean)session.getAttribute("isAdmin") == false) || (!forCustomer && (Boolean)session.getAttribute("isAdmin") == true)) {
+    			return true;
+    		} else {
+    			return false;
+    		}
+    	} else {
+    		return false;
+    	}
 	}
 }

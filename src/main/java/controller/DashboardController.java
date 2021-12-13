@@ -72,7 +72,7 @@ public class DashboardController extends HttpServlet {
 				try {
 					DeviceQueries deviceQuery = new DeviceQueries(DBConn.getConnection());
 					ArrayList<Devices> devices = deviceQuery.getAllRegisteredDevicesForUser(session.getAttribute("username").toString());
-					if(devices.size() > 0 && devices.get(0).getClaimCount() > 0) {
+					if(devices.size() > 0) {
 						for(int i=0; i< devices.size(); i++) {
 							Date purchaseDate = new SimpleDateFormat("yyyy-MM-dd").parse(devices.get(i).getPurchaseDate());
 							Date today = new Date();

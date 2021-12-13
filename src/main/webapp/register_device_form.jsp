@@ -4,7 +4,7 @@
 * No part of this assignment has been copied manually or electronically from any other source
 * (including web sites) or distributed to other students.
 *
-* Name: Saloni Yadav, Preeti Kshirsagar; Student ID: N01414159, N01494576; Date: ____________________
+* Name: Saloni Yadav, Preeti Kshirsagar; Student ID: N01414159, N01494576; Date: 6 Dec, 2021
 *
 ********************************************************************************/-->
 <%
@@ -30,9 +30,12 @@
 			            <div class="card-body">
 			                <h5 class="card-title">Register Device</h5>
 	                        <form method="post" action="register-device" novalidate>
-	                        <!--<c:if test="${requestScope['error'] != null}">
-	                            <div class="alert alert-danger">${requestScope['error']}</div>
-	                         </c:if>-->
+	                        <c:if test="${requestScope['success'] != null}">
+	                            <div class="alert alert-success" id="successMsg">${requestScope['success']}</div>
+	                        </c:if>
+	                        <c:if test="${requestScope['error'] != null}">    
+                            	<div class="alert alert-danger" id="errorMsg">${requestScope['error']}</div>
+	                         </c:if>
 	                            <div class="mb-3">
 	                                <label for="username" class="form-label">Email ID:</label>
 	                                <input type="text" class="form-control" name="username" id="username" value="${sessionScope['username']}" readonly>
@@ -40,6 +43,7 @@
 	                            <div class="mb-3">
 	                                <label for="productName" class="form-label">Product Name: </label>
 	                                <select name="productName" class="form-select">
+	                                	<option value="">Select Product</option>
 		                                <c:forEach var="product" items="${requestScope['products']}">
 		                               		<option value="${product.getId()}">${product.getName()}</option>
 						       			</c:forEach>

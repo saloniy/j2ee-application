@@ -4,7 +4,7 @@
 * No part of this assignment has been copied manually or electronically from any other source
 * (including web sites) or distributed to other students.
 *
-* Name: Saloni Yadav, Preeti Kshirsagar; Student ID: N01414159, N01494576; Date: ____________________
+* Name: Saloni Yadav, Preeti Kshirsagar; Student ID: N01414159, N01494576; Date: 6 Dec, 2021
 *
 ********************************************************************************/-->
 <%
@@ -25,7 +25,12 @@
 	        </div>
 	        <div class="row my-3">
 	            <div class="col-12 d-flex justify-content-end">
+	            <c:if test="${sessionScope.isAdmin == false}">
+	            	<a href="dashboard" class="btn btn-success">Back to Dashboard</a>
+	            </c:if>
+	            <c:if test="${sessionScope.isAdmin == true}">
 			    	<a href="view-registered-device?username=${requestScope['username']}" class="btn btn-success">Back to Registered Devices</a>
+			    </c:if>
 	            </div>
 	        </div>
 	        <table class="table table-light">
@@ -42,6 +47,10 @@
 		                    <td>${claim.getClaimDate()}</td>
 		                    <td>${claim.getDescription()}</td>
 		                    <td>
+		                    <c:if test="${sessionScope.isAdmin == false}">
+		                    	<p>${claim.getStatus()}</p>
+		                    </c:if>
+		                    <c:if test="${sessionScope.isAdmin == true}">
 			                    <select class="form-select" id="claimStatus${claim.getId()}" 
 			                    name="claimStatus" ${claim.getStatus() == "Approved" ? 'disabled': ''} 
 			                    onChange="claimStatusChanged(${claim.getId()})">
@@ -51,6 +60,7 @@
 			                    </select>
 			                    <span id="updatedMsg${claim.getId()}" class="success-msg hide">Claim status updated</span>
 			                    <span id="errorMsg${claim.getId()}" class="error-msg hide">Some error occurred</span>
+			                </c:if>
 		                  	</td>  
 		                    
 		                </tr>

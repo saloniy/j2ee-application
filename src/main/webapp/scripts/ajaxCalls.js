@@ -1,3 +1,26 @@
+/*********************************************************************************
+* ITE5332 : Project
+* I declare that this assignment is my own work in accordance with Humber Academic Policy.
+* No part of this assignment has been copied manually or electronically from any other source
+* (including web sites) or distributed to other students.
+*
+* Name: Saloni Yadav, Preeti Kshirsagar; Student ID: N01414159, N01494576; Date: 6 Dec, 2021
+*
+********************************************************************************/
+$(document).ready(function() {
+	var today = new Date();
+	var month = today.getMonth() + 1;
+    var day = today.getDate();
+    var year = today.getFullYear();
+
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+
+    var maxDate = year + '-' + month + '-' + day;    
+	$('#purchaseDate').attr('max', maxDate); // disable future dates
+})
 /**
  * call to update the status of a claim when changed by the admin
  */

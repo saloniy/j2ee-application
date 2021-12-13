@@ -1,3 +1,12 @@
+/*********************************************************************************
+* ITE5332 : Project
+* I declare that this assignment is my own work in accordance with Humber Academic Policy.
+* No part of this assignment has been copied manually or electronically from any other source
+* (including web sites) or distributed to other students.
+*
+* Name: Saloni Yadav, Preeti Kshirsagar; Student ID: N01414159, N01494576; Date: 6 Dec, 2021
+*
+********************************************************************************/
 package controller;
 
 import java.io.IOException;
@@ -13,6 +22,7 @@ import javax.servlet.http.HttpSession;
 import dao.ClaimQueries;
 import dao.DBConn;
 import dao.DeviceQueries;
+import model.Auth;
 import model.Claims;
 import model.Devices;
 
@@ -22,6 +32,7 @@ import model.Devices;
 @WebServlet("/add-claim")
 public class AddClaimController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	Boolean forCustomer = true;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -37,6 +48,12 @@ public class AddClaimController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+    	Auth auth = new Auth();
+    	if(!auth.validateUrlAccessibility(session, forCustomer)) {
+    		response.sendRedirect(request.getContextPath() + "/logout");
+    		return;
+    	}
 		String id = request.getParameter("id");
 		Devices claimDevice = new Devices();
 
@@ -63,7 +80,7 @@ public class AddClaimController extends HttpServlet {
 
 		String claimsAdded = "";
 		HttpSession session = request.getSession(false);
-		String url = "";
+		String url = "/submit_claim_form.jsp";
 
 		String description = request.getParameter("description");
 		String username = session.getAttribute("username").toString();
@@ -71,16 +88,16 @@ public class AddClaimController extends HttpServlet {
 		RequestDispatcher dispatcher = null;
 		String emptyDesc = null;
 		String device_id = request.getParameter("claimProductId");
+		Devices claimDevice = new Devices();
+		claimDevice.setId(device_id);
+		claimDevice.setProductName(request.getParameter("claimProduct"));
+		claimDevice.setSerialNumber(request.getParameter("claimProductSerial"));
 
 		if (description.trim() == "") {
 			emptyDesc = "Please enter a description";
 		}
 		if (emptyDesc != null) {
-			Devices claimDevice = new Devices();
-			claimDevice.setId(device_id);
-			claimDevice.setProductName(request.getParameter("claimProduct"));
-			claimDevice.setSerialNumber(request.getParameter("claimProductSerial"));
-			dispatcher = request.getRequestDispatcher("/submit_claim_form.jsp");
+			dispatcher = request.getRequestDispatcher(url);
 			request.setAttribute("emptyDesc", emptyDesc);
 			request.setAttribute("claimDevice", claimDevice);
 			dispatcher.forward(request, response);
@@ -106,9 +123,17 @@ public class AddClaimController extends HttpServlet {
 			e.printStackTrace();
 		}
 		if (claimsAdded == "success") {
-			url = "/dashboard";
+			request.setAttribute("success", "Claim Added Successfully");
+			request.setAttribute("claimDevice", claimDevice);
+		} else if(claimsAdded == "warranty exceeded"){
+			request.setAttribute("error", "Warranty period of 5 years exceeded");
+			request.setAttribute("claimDevice", claimDevice);
+		} else if(claimsAdded == "count exceeded"){
+			request.setAttribute("error", "Only 3 claims can be filed for a device");
+			request.setAttribute("claimDevice", claimDevice);
 		} else {
-			url = "/error.jsp";
+			request.setAttribute("error", "Some Error Occurred. Please try again");
+			request.setAttribute("claimDevice", claimDevice);
 		}
 		dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);

@@ -18,12 +18,12 @@ import java.util.ArrayList;
 import model.Claims;
 
 public class ClaimQueries {
-private Connection conn;
-	
-	public ClaimQueries(Connection conn){
+	private Connection conn;
+
+	public ClaimQueries(Connection conn) {
 		this.conn = conn;
 	}
-	
+
 	public ArrayList<Claims> getAllClaimsForDeviceAndUser(String username, int deviceId) {
 		String sql = "Select * from claims where username = ? and device_id = ?";
 		try {
@@ -32,7 +32,7 @@ private Connection conn;
 			ps.setInt(2, deviceId);
 			ResultSet result = ps.executeQuery();
 			ArrayList<Claims> claims = new ArrayList<Claims>();
-			while(result.next()) {
+			while (result.next()) {
 				Claims claim = new Claims();
 				claim.setId(result.getString("id"));
 				claim.setDescription(result.getString("description"));
@@ -47,7 +47,7 @@ private Connection conn;
 			return null;
 		}
 	}
-	
+
 	public int updateClaimStatusById(String status, int claimId) {
 		int count = 0;
 		String sql = "Update claims set status = ? where id= ?";
@@ -63,5 +63,26 @@ private Connection conn;
 			return 0;
 		}
 	}
-	
+
+	public String addClaim(Claims claim) {
+		int rows = 0;
+		String sql = "Insert into claims (username, device_id, date, description, status) values (?,?,?,?,?)";
+		try {
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setString(1, claim.getUsername());
+			st.setInt(2, claim.getDeviceId());
+			st.setDate(3, claim.getClaimDate_Date());
+			st.setString(4, claim.getDescription());
+			st.setString(5, claim.getStatus());
+			rows = st.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (rows > 0)
+			return "success";
+		else
+			return "failure";
+	}
+
 }

@@ -59,7 +59,7 @@
 				                	<c:if test="${device.getCanClaim() == true}">
 					                	<c:if test="${device.getClaimCount() < 3}">
 					                	<!--  button shown only if claim count < 3 for the device -->
-					                	<a href="add-claim" class="btn btn-success">Add Claim</a>
+					                	<a href='add-claim?id=<c:out value="${device.getId()}"/>'class="btn btn-success">Add Claim</a>
 					                	</c:if>
 					                	<c:if test="${device.getClaimCount() >= 3}">
 					                		<p>You have already submitted 3 claims for this device</p>

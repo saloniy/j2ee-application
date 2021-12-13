@@ -4,7 +4,7 @@
 * No part of this assignment has been copied manually or electronically from any other source
 * (including web sites) or distributed to other students.
 *
-* Name: Saloni Yadav, Preeti Kshirsagar; Student ID: N01414159, N01494576; Date: ____________________
+* Name: Saloni Yadav, Preeti Kshirsagar; Student ID: N01414159, N01494576; Date: 6 Dec, 2021
 *
 ********************************************************************************/-->
 <%
@@ -34,9 +34,12 @@
 			            <div class="card-body">
 			                <h5 class="card-title">Add a claim</h5>
 	                        <form method="post" action="add-claim" novalidate>
-	                        <!--<c:if test="${requestScope['error'] != null}">
+	                        <c:if test="${requestScope['success'] != null}">
+	                            <div class="alert alert-success">${requestScope['success']}</div>
+	                         </c:if>
+	                        <c:if test="${requestScope['error'] != null}">
 	                            <div class="alert alert-danger">${requestScope['error']}</div>
-	                         </c:if>-->
+	                         </c:if>
 	                         <div class="mb-3">
 	                                <label for="claimProductId" class="form-label">Claim Product Id : </label>
 	                                <input type="text" class="form-control" name="claimProductId" id="claimProductId" readonly value="${requestScope['claimDevice'].getId()}">

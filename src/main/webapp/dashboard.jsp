@@ -35,6 +35,7 @@
 			        <tr>
 			            <th scope="col">#</th>
 			            <th scope="col">Device Name</th>
+			            <th scope="col">Serial Number</th>
 			            <th scope="col">Registered On</th>
 			            <th scope="col">Claim Submitted: Status</th>
 			            <th scope="col">Submit New Claim</th>
@@ -45,6 +46,7 @@
 				            <tr>
 				                <th scope="row">${device.getId()}</th>
 				                <td>${device.getProductName()}</td>
+				                <td>${device.getSerialNumber()}</td>
 				                <td>${device.getPurchaseDate()}</td>
 				                <td>
 				                	<c:set var="claimForDevice" value="claims${device.getId()}"/>
@@ -64,6 +66,9 @@
 					                	<c:if test="${device.getClaimCount() >= 3}">
 					                		<p>You have already submitted 3 claims for this device</p>
 					                	</c:if>
+					                </c:if>
+					                <c:if test="${device.getClaimCount() > 0}">
+					                	<a href="view-claims?username=${sessionScope.username}&deviceId=${device.getId()}&product=${device.getProductName()}" class="btn btn-warning">View Claims</a>
 					                </c:if>
 				                </td>
 				            </tr>

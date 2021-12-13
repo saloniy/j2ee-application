@@ -37,7 +37,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                                <input type="password" class="form-control" name="password" id="password" placeholder="Password" autocomplete="new-password">
                                 <c:if test="${requestScope['emptyPassword'] != null}">
 		                    	<div class="error-msg">${requestScope['emptyPassword']}</div>
 		                    	</c:if>
@@ -80,7 +80,7 @@
 		                    </div>
 		                    <div class="mb-3">
 		                        <label for="password" class="form-label">Password</label>
-		                        <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+		                        <input type="password" name="password" class="form-control" id="password" placeholder="Password" autocomplete="new-password">
 		                        <c:if test="${requestScope['invalidPassword'] != null}">
 		                    	<div class="error-msg">${requestScope['invalidPassword']}</div>
 		                    	</c:if>

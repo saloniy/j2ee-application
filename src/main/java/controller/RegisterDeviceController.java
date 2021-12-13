@@ -1,3 +1,12 @@
+/*********************************************************************************
+* ITE5332 : Project
+* I declare that this assignment is my own work in accordance with Humber Academic Policy.
+* No part of this assignment has been copied manually or electronically from any other source
+* (including web sites) or distributed to other students.
+*
+* Name: Saloni Yadav, Preeti Kshirsagar; Student ID: N01414159, N01494576; Date: 6 Dec, 2021
+*
+********************************************************************************/
 package controller;
 
 import java.io.IOException;
@@ -12,10 +21,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.DBConn;
 import dao.DeviceQueries;
 import dao.ProductQueries;
+import model.Auth;
 import model.Devices;
 import model.Products;
 
@@ -25,6 +36,7 @@ import model.Products;
 @WebServlet("/register-device")
 public class RegisterDeviceController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	Boolean forCustomer = true;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -40,6 +52,12 @@ public class RegisterDeviceController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+    	Auth auth = new Auth();
+    	if(!auth.validateUrlAccessibility(session, forCustomer)) {
+    		response.sendRedirect(request.getContextPath() + "/logout");
+    		return;
+    	}
 		try {
 			ProductQueries productQuery = new ProductQueries(DBConn.getConnection());
 			ArrayList<Products> products = productQuery.getAllProducts();
@@ -64,29 +82,28 @@ public class RegisterDeviceController extends HttpServlet {
 		String invalidProduct = null, invalidSerial = null, invalidDate = null;
 		String url = "/register_device_form.jsp";
 		String result = "";
-
-		DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-		long millis = System.currentTimeMillis();
-		java.sql.Date today = new java.sql.Date(millis);
 		String purchaseDate = request.getParameter("purchaseDate");
+		
+		ProductQueries productQuery = null;
+		try {
+			productQuery = new ProductQueries(DBConn.getConnection());
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		ArrayList<Products> products = productQuery.getAllProducts();
+		request.setAttribute("products", products);
 
 		if (request.getParameter("productName").trim() == "") {
-			invalidProduct = "Please enter a valid name";
+			invalidProduct = "Please select a valid product";
 		}
 		if (request.getParameter("serialNum").trim() == "") {
-			invalidSerial = "Please enter a valid email ID";
+			invalidSerial = "Please enter a valid serial number";
 		}
 		if (request.getParameter("purchaseDate").trim() == "") {
 			invalidDate = "Please enter a value in purchase date";
 		}
-		if (request.getParameter("purchaseDate").trim() != "") {
-			Date dt_purchaseDate = Date.valueOf(purchaseDate);
-			if (dt_purchaseDate.compareTo(today) > 0)
-				invalidDate = "Please enter a valid date, which is in past";
-		}
-
 		if ((invalidProduct != null) || (invalidSerial != null) || (invalidDate != null)) {
-			rd = request.getRequestDispatcher("/login_registration.jsp");
 			request.setAttribute("invalidProduct", invalidProduct);
 			request.setAttribute("invalidSerial", invalidSerial);
 			request.setAttribute("invalidDate", invalidDate);
@@ -132,9 +149,9 @@ public class RegisterDeviceController extends HttpServlet {
 			e.printStackTrace();
 		}
 		if (result == "success") {
-			url = "/dashboard";
+			request.setAttribute("success", "Device Registered Successfully");
 		} else {
-			url = "/error.jsp";
+			request.setAttribute("error", "Some Error Occurred. Please try again");
 		}
 		rd = request.getRequestDispatcher(url);
 		rd.forward(request, response);
